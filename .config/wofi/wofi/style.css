@@ -1,0 +1,60 @@
+@define-color background    #0B0B0B;
+@define-color background2   #3C0D1A;
+@define-color border        #0B0B0B;  
+@define-color innerborder   #0B0B0B;
+@define-color txt           #E6003C;
+@define-color selected      #E6003C;
+@define-color selectedtxt   #0B0B0B;
+
+* {
+    font-family: FontAwesome, Monaspace Krypton, monospace;
+    font-size: 14px;
+}
+
+window {
+    margin: 0px;
+    padding: 10px;
+    background-color: @background;
+    border-radius: 5px;
+    border-color: @bordercolor;
+}
+
+#inner-box {
+    margin: 5px;
+    padding: 10px;
+    border: 0px;
+    border-color: @innerborder;
+    background-color: @background;
+}
+
+#outer-box {
+    margin: 5px;
+    padding: 10px;
+    border: 0px;
+    border-color: @innerborder;
+}
+
+#input {
+    margin: 5px;
+    padding: 10px;
+    border: 0px;
+    border-color: @innerborder;
+    background-color: @background2;
+    color: @txt;
+}
+
+#text {
+    margin: 5px;
+    padding: 10px;
+    border: 0px;
+    border-color: @innerborder;
+    color: @txt;
+}
+
+#entry:selected {
+    background-color: @selected
+}
+
+#entry:selected #text {
+    color: @selectedtxt
+}
