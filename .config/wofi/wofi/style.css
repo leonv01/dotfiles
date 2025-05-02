@@ -1,14 +1,15 @@
 @define-color background    #0B0B0B;
-@define-color background2   #3C0D1A;
+@define-color background2   #0B0B0B;
 @define-color border        #0B0B0B;  
 @define-color innerborder   #0B0B0B;
-@define-color txt           #E6003C;
-@define-color selected      #E6003C;
+@define-color txt           #D4C9BE;
+@define-color selected      #D4C9BE;
 @define-color selectedtxt   #0B0B0B;
 
 * {
     font-family: FontAwesome, Monaspace Krypton, monospace;
     font-size: 14px;
+    font-weight: bold;
 }
 
 window {
@@ -52,7 +53,8 @@ window {
 }
 
 #entry:selected {
-    background-color: @selected
+    background-color: @selected;
+    border-radius: 7px;
 }
 
 #entry:selected #text {

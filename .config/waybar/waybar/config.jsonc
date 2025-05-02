@@ -1,28 +1,25 @@
 // -*- mode: jsonc -*-
-{
+[{
     "output": "DP-1",
     // "layer": "top", // Waybar at top layer
     // "position": "bottom", // Waybar position (top|bottom|left|right)
-    "height": 32, // Waybar height (to be removed for auto height)
+    "height": 40,// Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
-    "spacing": 2, // Gaps between modules (4px)
+    "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
         "hyprland/workspaces",
-        "clock",
-        "disk",
-        "disk#mount1",
-        "disk#mount2"
+        "wlr/taskbar"
     ],
     "modules-center": [
-        "custom/media"
+        "clock",
+        "custom/weather"
     ],
     "modules-right": [
-        "network",
-        "pulseaudio",
-        "cpu",
-        "memory",
         "temperature",
+        "custom/disks",
+        "custom/media",
+        "pulseaudio",
         "tray"
     ],
     "hyprland/workspaces": {
@@ -47,32 +44,6 @@
         "tooltip": true,
         "tooltip-format": "{app}: {title}"
     },
-    "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 5,
-        "consume-icons": {
-            "on": " "
-        },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
-        },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
-    },
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
@@ -85,10 +56,10 @@
         "spacing": 10
     },
     "clock": {
-        // "timezone": "America/New_York",
+        "timezone": "Europe/Berlin",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-	"format": "{:%H:%M %d.%m.%Y}",
-	"interval": 60
+        "format": "{:%H:%M %d. %B}",
+        "interval": 60
     },
     "cpu": {
         "format": "{usage}%",
@@ -99,13 +70,14 @@
     },
     "temperature": {
         "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
-        "critical-threshold": 80,
-        "format-critical": "{temperatureC}°C {icon}",
-        "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "", "", "", "", ""]
+        "critical-threshold": 85,
+        "warning-threshold": 75,
+        "format-critical": "{temperatureC}°C ",
+        "format-warning": "{temperatureC}°C ",
+        "format": "{temperatureC}°C"
     },
     "pulseaudio": {
-        "format": "{volume}% {icon}",
+        "format": "{volume}% {icon} {format_source} ",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",  
         "format-icons": {
@@ -120,15 +92,14 @@
         "on-click": "pavucontrol"
     },
     "custom/media": {
-        "format": "{text}",
+        "format": " {text}",
         "return-type": "json",
-        "max-length": 40,
-        "format-icons": {
-            "spotify": "",
-            "default": "🎜"
-        },
-        "escape": true,
-        "exec": "/usr/bin/python3 /etc/xdg/waybar/modules/mediaplayer.py --player spotify 2> /dev/null"
+        "max-length": 25,
+        "interval": 0,
+        "escape": false,
+        /*"exec": "/usr/bin/python3 ~/.config/waybar/modules/mediaplayer.py --player spotify 2> /dev/null" */
+        "exec": "~/.config/waybar/modules/current_spotify.sh",
+        "on-click": "playerctl play-pause"
     },
     "custom/power": {
         "format" : "⏻ ",
@@ -164,5 +135,53 @@
         "interface": "enp34s0",
         "format": "{bandwidthUpBits}↑ {bandwidthDownBits}↓",
         "tooltip-format": "{ifname}"
+    },
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "tooltip": true,
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "active-first": true
+    },
+    "custom/weather": {
+        "exec": "~/.config/waybar/modules/weather.sh",
+        "interval": 600,
+        "format": "{}",
+        "tooltip": false
+    },
+    "custom/nightlight": {
+        "exec": "~/.config/waybar/modules/nightlight.sh",
+        "interval": 30,
+        "tooltip": true,
+        "format": "{}",
+        "format-icons": {
+            "on": "🌙",
+            "off": "☀️"
+        },
+        "on-click": "~/.config/waybar/modules/nightlight.sh toggle",
+        "return-type": "json"
+    },
+    "custom/disks": {
+        "exec": "/usr/bin/python3 ~/.config/waybar/modules/disks.py",
+        "interval": 15,
+        "format": "{}",
+        "tooltip": true,
+        "return-type": "json"
     }
-}
+},
+{
+    "layer": "top",
+    "output": "DP-3",
+    "modules-left": [
+        "hyprland/workspaces",
+        "wlr/taskbar"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "temperature"
+    ]
+}]
+
