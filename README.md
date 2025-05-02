@@ -7,7 +7,7 @@
 - HyprlandWM
 - Kitty
 - Waybar
-- SwayNC
+- Dunst
 - Wofi
 - Hyprpaper
 
